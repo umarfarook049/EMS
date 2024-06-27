@@ -63,8 +63,13 @@ export const EmployeeTable: React.FC<EmployeeTableProps> = ({
               </button>
             </td>
             <td className="py-2 px-4 border-b space-x-2">
-              <input type="checkbox" name="active" id="active" />
-            </td>
+            <input
+                 type="checkbox"
+                name="active"
+                id="active"
+                defaultChecked={true} // Set defaultChecked to true for the checkbox to be checked by default
+                 />
+              </td>
           </tr>
         ))}
       </tbody>

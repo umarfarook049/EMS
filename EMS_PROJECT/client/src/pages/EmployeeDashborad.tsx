@@ -1,37 +1,33 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Employee } from "@/lib/types";
-import { useRecoilValue } from "recoil";
-import { userInfo } from "../store/atom";
+import { Employee } from "@/lib/types"; // Assuming this is where the Employee type is defined
 import EmployeeDetail from "@/components/EmployeeDetails";
 
-export default function EmployeeDashborad() {
-  const [data, setData] = useState<Employee>();
-  const user = useRecoilValue(userInfo);
-  console.log(user?.UserID);
-  const id = user?.UserID;
+const EmployeeDashboard = () => {
+  const [data, setData] = useState<Employee | null>(null);
 
   useEffect(() => {
-    async function getdata() {
+    const fetchData = async () => {
       try {
-        const responese = await axios.get<Employee>(
-          "http://localhost:3000/api/v1/employee/" + id
-        );
-        const responeseData = await responese.data;
-        setData(responeseData);
+        const response = await axios.get<Employee>("http://localhost:3000/api/v1/employee/1");
+        setData(response.data);
       } catch (error) {
-        console.log("error", error);
-        // setError("some thing went worng");
+        console.error("Error fetching employee data:", error);
       }
-    }
-    if (!id) return;
-    if (!data) getdata();
-  }, [id]);
-  console.log(data);
+    };
+
+    fetchData();
+  }, []);
 
   return (
-    <div className=" h-screen flex items-center justify-center">
-      <EmployeeDetail employee={data} />
+    <div>
+      {data ? (
+        <EmployeeDetail employee={data} />
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
-}
+};
+
+export default EmployeeDashboard;

@@ -1,6 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { useParams } from "react-router-dom";
+
+interface EditEmployeeProps {
+  // Define props here
+}
 
 interface EmployeeDetails {
   employee_code?: string;
@@ -39,7 +44,8 @@ interface EmployeeDetails {
   ctc_breakup?: string;
 }
 
-const EditEmployee = ({ employeeId }: { employeeId: string }) => {
+const EditEmployee: React.FC<EditEmployeeProps> = () => {
+  const { id } = useParams<{ id: string }>(); // Retrieve id parameter from URL
   const {
     register,
     handleSubmit,
@@ -48,17 +54,18 @@ const EditEmployee = ({ employeeId }: { employeeId: string }) => {
   } = useForm<EmployeeDetails>();
 
   useEffect(() => {
-    if (employeeId) {
-      fetchEmployeeDetails(employeeId);
+    if (id) {
+      fetchEmployeeDetails(id);
     }
-  }, [employeeId]);
+  }, [id]);
 
-  const fetchEmployeeDetails = async (id: string) => {
+  const fetchEmployeeDetails = async (employeeId: string) => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/v1/employee/${id}`);
+      const response = await axios.get(`http://localhost:3000/api/v1/employee/${employeeId}`);
       const employeeData: EmployeeDetails = response.data;
-      (Object.keys(employeeData) as (keyof EmployeeDetails)[]).forEach(key => {
-        setValue(key, employeeData[key]);
+      Object.keys(employeeData).forEach((key) => {
+        const typedKey = key as keyof EmployeeDetails; // Cast key to keyof EmployeeDetails
+        setValue(typedKey, employeeData[typedKey]);
       });
     } catch (error) {
       console.error("Error fetching employee details:", error);
@@ -67,11 +74,9 @@ const EditEmployee = ({ employeeId }: { employeeId: string }) => {
   };
 
   const onSubmit = async (data: EmployeeDetails) => {
-    console.log(data);
-
     try {
       const response = await axios.put(
-        `http://localhost:3000/api/v1/employee/${employeeId}`,
+        `http://localhost:3000/api/v1/employee/${id}`,
         data
       );
       console.log("Employee updated successfully:", response.data);
@@ -139,7 +144,6 @@ const EditEmployee = ({ employeeId }: { employeeId: string }) => {
           </div>
         </div>
       </section>
-      
 
       {/* Personal Details */}
       <section className="p-4 border rounded-lg shadow-md">
@@ -231,7 +235,7 @@ const EditEmployee = ({ employeeId }: { employeeId: string }) => {
           </div>
         </div>
       </section>
-     
+
       {/* Professional Details */}
       <section className="p-4 border rounded-lg shadow-md">
         <h2 className="text-lg font-bold mb-4">Professional Details</h2>
@@ -289,7 +293,8 @@ const EditEmployee = ({ employeeId }: { employeeId: string }) => {
             <textarea
               {...register("employment_history")}
               className="w-full p-2 border rounded"
-            ></textarea>
+              rows={3}
+            />
           </div>
           <div>
             <label className="block mb-2">Date of Joining</label>
@@ -299,13 +304,6 @@ const EditEmployee = ({ employeeId }: { employeeId: string }) => {
               className="w-full p-2 border rounded"
             />
           </div>
-        </div>
-      </section>
-      
-      {/* Project Details */}
-      <section className="p-4 border rounded-lg shadow-md">
-        <h2 className="text-lg font-bold mb-4">Project Details</h2>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>
             <label className="block mb-2">Project Code</label>
             <input
@@ -315,7 +313,7 @@ const EditEmployee = ({ employeeId }: { employeeId: string }) => {
             />
           </div>
           <div>
-            <label className="block mb-2">Start Date</label>
+            <label className="block mb-2">Project Start Date</label>
             <input
               type="date"
               {...register("project_start_date")}
@@ -323,7 +321,7 @@ const EditEmployee = ({ employeeId }: { employeeId: string }) => {
             />
           </div>
           <div>
-            <label className="block mb-2">End Date</label>
+            <label className="block mb-2">Project End Date</label>
             <input
               type="date"
               {...register("project_end_date")}
@@ -348,10 +346,10 @@ const EditEmployee = ({ employeeId }: { employeeId: string }) => {
           </div>
         </div>
       </section>
-      
-      {/* Finance Details */}
+
+      {/* Additional Details */}
       <section className="p-4 border rounded-lg shadow-md">
-        <h2 className="text-lg font-bold mb-4">Finance Details</h2>
+        <h2 className="text-lg font-bold mb-4">Additional Details</h2>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>
             <label className="block mb-2">PAN Card</label>
@@ -395,10 +393,11 @@ const EditEmployee = ({ employeeId }: { employeeId: string }) => {
           </div>
           <div>
             <label className="block mb-2">CTC Breakup</label>
-            <textarea
+            <input
+              type="text"
               {...register("ctc_breakup")}
               className="w-full p-2 border rounded"
-            ></textarea>
+            />
           </div>
         </div>
       </section>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Employee } from "@/lib/types";
+import { FiEye, FiEdit, FiTrash } from "react-icons/fi"; // Example using react-icons
 
 type EmployeeTableProps = {
   data?: Employee[];
@@ -46,19 +47,19 @@ export const EmployeeTable: React.FC<EmployeeTableProps> = ({
                 className="text-blue-600 hover:underline"
                 onClick={() => onView(employee.user_id)}
               >
-                View
+                <FiEye />
               </button>
               <button
                 className="text-yellow-600 hover:underline"
                 onClick={() => onEdit(employee.user_id)}
               >
-                Edit
+                <FiEdit />
               </button>
               <button
                 className="text-red-600 hover:underline"
                 onClick={() => onDelete(employee.user_id)}
               >
-                Delete
+                <FiTrash />
               </button>
             </td>
             <td className="py-2 px-4 border-b space-x-2">

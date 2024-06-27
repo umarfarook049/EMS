@@ -26,7 +26,7 @@ const formSchema = z.object({
     message: "Username must be at least 2 characters.",
   }),
   password: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+    message: "Password must be at least 2 characters.",
   }),
 });
 
@@ -49,8 +49,6 @@ export default function SignIn() {
       const resp = await instance.post("/signin", values);
       const respdata = await resp.data;
       console.log(respdata);
-      // setUser(respdata);
-
       sessionStorage.setItem("token", respdata.token);
       sessionStorage.setItem("user", JSON.stringify(respdata.user));
       if (respdata.isadmin) {
@@ -58,20 +56,21 @@ export default function SignIn() {
       }
       navigate("/dashboard/employee");
     } catch (error) {
-      console.log("some thing worng", error);
+      console.log("something wrong", error);
       setError("root", {
-        message: "some thing went worng",
+        message: "Invalid credentials",
       });
     }
   }
+
   return (
-    <div className=" h-screen flex items-center justify-center">
+    <div className="h-screen flex items-center justify-center">
       <Card className="mx-auto max-w-sm">
         <CardHeader>
           <CardTitle className="text-2xl text-center">Login</CardTitle>
           <CardDescription>
             Welcome Back...
-            Enter your login credentials to login                    
+            Enter your login credentials to login
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -95,16 +94,20 @@ export default function SignIn() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>password</FormLabel>
+                    <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input placeholder="Password" {...field} />
+                      <Input
+                        type="password" // Set type to 'password' for hiding characters
+                        placeholder="Password"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
               {errors.root && (
-                <p className=" text-sm text-red-800">Invalid Credentials</p>
+                <p className="text-sm text-red-800">Invalid Credentials</p>
               )}
               <Button type="submit" className="w-full bg-amber-600">
                 Login

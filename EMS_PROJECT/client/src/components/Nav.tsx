@@ -55,12 +55,7 @@ export default function AdminNav() {
                 </>
               ) : (
                 <>
-                  <Link
-                    to={"/dashboard"}
-                    className="px-4 py-2 rounded hover:bg-blue-700"
-                  >
-                    Dashboard
-                  </Link>
+                  
                   <Link
                     to={"/payslip"}
                     className="px-4 py-2 rounded hover:bg-blue-700"

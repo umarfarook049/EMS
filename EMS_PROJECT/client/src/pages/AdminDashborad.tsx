@@ -78,7 +78,7 @@ export default function AdminDashboard() {
 
           <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
             <h3 className="text-xl font-semibold">Projects</h3>
-            <p className="text-green-600 text-4xl">0</p>
+            <p className="text-green-600 text-4xl">1</p>
           </div>
         </div>
 

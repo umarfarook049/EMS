@@ -119,9 +119,9 @@ const EmployeeForm = () => {
           </div>
         </div>
       </section>
-      <button className="bg-amber-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+      {/* <button className="bg-amber-600 text-white px-4 py-2 rounded hover:bg-blue-700">
         Save & Next
-      </button>
+      </button> */}
 
       {/* Personal Details */}
       <section className="p-4 border rounded-lg shadow-md">
@@ -213,9 +213,9 @@ const EmployeeForm = () => {
           </div>
         </div>
       </section>
-      <button className="bg-amber-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+      {/* <button className="bg-amber-600 text-white px-4 py-2 rounded hover:bg-blue-700">
         Save & Next
-      </button>
+      </button> */}
       {/* Professional Details */}
       <section className="p-4 border rounded-lg shadow-md">
         <h2 className="text-lg font-bold mb-4">Professional Details</h2>
@@ -285,9 +285,9 @@ const EmployeeForm = () => {
           </div>
         </div>
       </section>
-      <button className="bg-amber-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+      {/* <button className="bg-amber-600 text-white px-4 py-2 rounded hover:bg-blue-700">
         Save & Next
-      </button>
+      </button> */}
       {/* Project Details */}
       <section className="p-4 border rounded-lg shadow-md">
         <h2 className="text-lg font-bold mb-4">Project Details</h2>
@@ -334,9 +334,9 @@ const EmployeeForm = () => {
           </div>
         </div>
       </section>
-      <button className="bg-amber-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+      {/* <button className="bg-amber-600 text-white px-4 py-2 rounded hover:bg-blue-700">
         Save & Next
-      </button>
+      </button> */}
       {/* Finance Details */}
       <section className="p-4 border rounded-lg shadow-md">
         <h2 className="text-lg font-bold mb-4">Finance Details</h2>

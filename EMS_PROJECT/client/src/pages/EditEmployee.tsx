@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 interface EditEmployeeProps {
-  // Define props here
+  // Define props here if needed
 }
 
 interface EmployeeDetails {
@@ -46,6 +46,8 @@ interface EmployeeDetails {
 
 const EditEmployee: React.FC<EditEmployeeProps> = () => {
   const { id } = useParams<{ id: string }>(); // Retrieve id parameter from URL
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -60,6 +62,7 @@ const EditEmployee: React.FC<EditEmployeeProps> = () => {
   }, [id]);
 
   const fetchEmployeeDetails = async (employeeId: string) => {
+    setLoading(true);
     try {
       const response = await axios.get(`http://localhost:3000/api/v1/employee/${employeeId}`);
       const employeeData: EmployeeDetails = response.data;
@@ -70,6 +73,8 @@ const EditEmployee: React.FC<EditEmployeeProps> = () => {
     } catch (error) {
       console.error("Error fetching employee details:", error);
       alert("Failed to fetch employee details");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -81,69 +86,20 @@ const EditEmployee: React.FC<EditEmployeeProps> = () => {
       );
       console.log("Employee updated successfully:", response.data);
       alert("Employee updated successfully");
+      navigate("/employees"); // Redirect to employee list or appropriate page
     } catch (error) {
       console.error("Error updating employee:", error);
       alert("Failed to update employee");
     }
   };
 
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 p-8">
-      {/* User Details */}
-      <section className="p-4 border rounded-lg shadow-md">
-        <h2 className="text-lg font-bold mb-4">User Details</h2>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <div>
-            <label className="block mb-2">Employee Code</label>
-            <input
-              type="text"
-              {...register("employee_code")}
-              className="w-full p-2 border rounded"
-            />
-          </div>
-          <div>
-            <label className="block mb-2">Name</label>
-            <input
-              type="text"
-              {...register("name", { required: true })}
-              className="w-full p-2 border rounded"
-            />
-            {errors.name && (
-              <p className="text-red-500">This field is required</p>
-            )}
-          </div>
-          <div>
-            <label className="block mb-2">Email</label>
-            <input
-              type="email"
-              {...register("email", { required: true })}
-              className="w-full p-2 border rounded"
-            />
-            {errors.email && (
-              <p className="text-red-500">This field is required</p>
-            )}
-          </div>
-          <div>
-            <label className="block mb-2">Password</label>
-            <input
-              type="password"
-              {...register("password", { required: true })}
-              className="w-full p-2 border rounded"
-            />
-            {errors.password && (
-              <p className="text-red-500">This field is required</p>
-            )}
-          </div>
-          <div>
-            <label className="block mb-2">Is Admin</label>
-            <input
-              type="checkbox"
-              {...register("is_admin")}
-              className="p-2 border rounded"
-            />
-          </div>
-        </div>
-      </section>
+      
 
       {/* Personal Details */}
       <section className="p-4 border rounded-lg shadow-md">

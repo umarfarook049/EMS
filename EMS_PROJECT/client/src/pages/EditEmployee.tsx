@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
 interface EmployeeDetails {
@@ -39,7 +40,8 @@ interface EmployeeDetails {
   ctc_breakup?: string;
 }
 
-const EditEmployee = ({ employeeId }: { employeeId: string }) => {
+const EditEmployee = () => {
+  const { id: employeeId } = useParams<{ id: string }>();
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<EmployeeDetails>();
   const [employeeData, setEmployeeData] = useState<EmployeeDetails | null>(null);
   const [loading, setLoading] = useState<boolean>(false);

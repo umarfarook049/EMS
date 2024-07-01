@@ -328,6 +328,7 @@ export async function editEmployee(req: Request, res: Response) {
       SET pancard = $1, aadharcard = $2, bank_name = $3, branch = $4, ifsc_code = $5, ctc_breakup = $6
       WHERE user_id = $7
     `;
+    
     await pool.query(updateFinanceDetailsQuery, [
       updatedFinance.pancard,
       updatedFinance.aadharcard,

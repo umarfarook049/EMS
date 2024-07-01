@@ -22,11 +22,11 @@ import {
 import instance from "@/lib/axios";
 
 const formSchema = z.object({
-  usercode: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+  usercode: z.string().min(3, {
+    message: "Username must be Login with Employee Code.",
   }),
-  password: z.string().min(2, {
-    message: "Password must be at least 2 characters.",
+  password: z.string().min(3, {
+    message: "Password must be atleast 3 characters.",
   }),
 });
 
